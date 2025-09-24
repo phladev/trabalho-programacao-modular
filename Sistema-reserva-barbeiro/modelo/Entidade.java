@@ -1,5 +1,5 @@
 public abstract class Entidade {
-    private Intenger id;
+    private Integer id;
 
     public Integer getId() {
         return id;
