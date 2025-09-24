@@ -1,6 +1,14 @@
 public abstract class Entidade {
     private Integer id;
 
+    public Entidade() {
+        id = null;
+    }
+
+    public Entidade(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }
