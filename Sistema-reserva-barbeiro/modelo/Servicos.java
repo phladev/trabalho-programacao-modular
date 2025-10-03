@@ -1,5 +1,3 @@
-package modelo;
-
 public class Servicos extends Entidade{
     private String nome;
     private double preco;

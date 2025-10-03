@@ -1,4 +1,3 @@
-package modelo;
 public abstract class Entidade {
     private Integer id;
 
