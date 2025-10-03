@@ -5,7 +5,7 @@ public class Cliente extends Entidade{
     private String nome;
     private Integer cpf;
     private Integer telefone;
-    public List<Integer> agendamentos;
+    private List<Integer> agendamentos;
 
     public Cliente(){
         super();
