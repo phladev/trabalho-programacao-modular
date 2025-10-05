@@ -14,8 +14,8 @@ public class Servico extends Entidade{
     public Servico (Integer id, String nome, double preco, double tempo) {
         super(id);
         this.nome = nome;
-        this.preco = 0;
-        this.tempo = 0;
+        this.preco = preco;
+        this.tempo = tempo;
     }
 
     public void setNome(String nome) {
@@ -45,7 +45,7 @@ public class Servico extends Entidade{
     public String toString(){
         return ("id do servico: "+ getId() + "\n" +
         "nome: " + nome + "\n" + 
-        "preco: " + tempo + "\n" + 
+        "preco: " + preco + "\n" + 
         "tempo estimado: " + tempo + "\n");
     }
 }
