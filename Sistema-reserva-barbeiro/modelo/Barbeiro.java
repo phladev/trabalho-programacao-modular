@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Barbeiro extends Entidade {
   private String nome;
-  private Integer cpf;
-  private Integer telefone;
-  private List<Integer> agendamentos;
+  private String cpf;
+  private String telefone;
+  private List<Agendamento> agendamentos;
 
   public Barbeiro() {
     super();
@@ -17,7 +17,7 @@ public class Barbeiro extends Entidade {
     agendamentos = new ArrayList<>();
   }
 
-  public Barbeiro(Integer id, String nome, Integer cpf, Integer telefone) {
+  public Barbeiro(Integer id, String nome, String cpf, String telefone) {
     super(id);
     this.nome = nome;
     this.cpf = cpf;
@@ -33,31 +33,31 @@ public class Barbeiro extends Entidade {
     this.nome = nome;
   }
 
-  public Integer getCpf() {
+  public String getCpf() {
     return cpf;
   }
 
-  public void setCpf(Integer cpf) {
+  public void setCpf(String cpf) {
     this.cpf = cpf;
   }
 
-  public Integer getTelefone() {
+  public String getTelefone() {
     return telefone;
   }
 
-  public void setTelefone(Integer telefone) {
+  public void setTelefone(String telefone) {
     this.telefone = telefone;
   }
 
-  public List<Integer> getAgendamentos() {
+  public List<Agendamento> getAgendamentos() {
     return agendamentos;
   }
 
-  public void setAgendamentos(List<Integer> agendamentos) {
+  public void setAgendamentos(List<Agendamento> agendamentos) {
     this.agendamentos = agendamentos;
   }
 
-  public void adicionarAgendamento(Integer agendamento) {
+  public void adicionarAgendamento(Agendamento agendamento) {
     agendamentos.add(agendamento);
   }
 
