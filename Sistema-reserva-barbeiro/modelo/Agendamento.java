@@ -1,28 +1,32 @@
 package modelo;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Agendamento extends Entidade {
-    public Cliente cliente;
-    public Barbeiro barbeiro;
-    public Date data;
-    public List<Integer> agendamentos;
-    public String status;
+    private Cliente cliente;
+    private Barbeiro barbeiro;
+    private LocalDateTime dataHora;
+    private List<ServicoAgendamento> servicos;
+    private StatusAgendamento status;
 
     public Agendamento(){
         super();
         cliente = null;
-        data = null;
-        agendamentos = new ArrayList<>();
+        barbeiro = null;
+        dataHora = null;
+        servicos = new ArrayList<>();
+        status = StatusAgendamento.AGENDADO;
     }
 
-    public Agendamento(Integer id, Cliente cliente, Date data){
+    public Agendamento(Integer id, Cliente cliente, Barbeiro barbeiro, LocalDateTime dataHora){
         super(id);
         this.cliente = cliente;
-        this.data = data;
-        agendamentos = new ArrayList<>();
+        this.barbeiro = barbeiro;
+        this.dataHora = dataHora;
+        servicos = new ArrayList<>();
+        status = StatusAgendamento.AGENDADO;
     }
 
     public Cliente getCliente() {
@@ -33,16 +37,16 @@ public class Agendamento extends Entidade {
         return barbeiro;
     }
 
-    public Date getData() {
-        return data;
+    public LocalDateTime getDataHora() {
+        return dataHora;
     }
 
-    public String getStatus() {
+    public StatusAgendamento getStatus() {
         return status;
     }
 
-    public List<Integer> getAgendamentos() {
-        return agendamentos;
+    public List<ServicoAgendamento> getServicos() {
+        return servicos;
     }
 
     public void setCliente(Cliente cliente) {
@@ -53,28 +57,38 @@ public class Agendamento extends Entidade {
         this.barbeiro = barbeiro;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
     }
 
-    public void setAgendamentos(List<Integer> agendamentos) {
-        this.agendamentos = agendamentos;
+    public void setServicos(List<ServicoAgendamento> servicos) {
+        this.servicos = servicos;
     }
 
-    public void adicionarAgendamento(Integer agendamento) {
-        agendamentos.add(agendamento);
+    public void adicionarServico(ServicoAgendamento servico) {
+        servicos.add(servico);
     }
 
-    public void setStatus(String status) {
-      this.status = status;
+    public void setStatus(StatusAgendamento status) {
+        this.status = status;
+    }
+
+    public double calcularValorTotal() {
+        return servicos.stream()
+                      .mapToDouble(ServicoAgendamento::getPreco)
+                      .sum();
     }
 
     @Override
     public String toString() {
-        return "Id do agendamento: " + getId()+
-            "\n Nome Cliente: " + getCliente().getNome()+
-            "\n Nome do Barbeiro: " + getBarbeiro().getNome()+
-            "\n Data dos serviços: " + getData();
-            
+        String clienteNome = (cliente != null) ? cliente.getNome() : "N/A";
+        String barbeiroNome = (barbeiro != null) ? barbeiro.getNome() : "N/A";
+        
+        return "Id do agendamento: " + getId() +
+            "\n Nome Cliente: " + clienteNome +
+            "\n Nome do Barbeiro: " + barbeiroNome +
+            "\n Data e hora: " + dataHora +
+            "\n Status: " + status +
+            "\n Valor total: R$ " + String.format("%.2f", calcularValorTotal());
     }
 }
