@@ -1,17 +1,17 @@
 package modelo;
 
-public class Servicos extends Entidade{
+public class Servico extends Entidade{
     private String nome;
     private double preco;
     private double tempo;
-    public Servicos () {
+    public Servico () {
         super();
         nome = null;
         preco = 0;
         tempo = 0;
     }
 
-    public Servicos (Integer id, String nome, double preco, double tempo) {
+    public Servico (Integer id, String nome, double preco, double tempo) {
         super(id);
         this.nome = nome;
         this.preco = 0;

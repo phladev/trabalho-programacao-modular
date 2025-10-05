@@ -1,10 +1,10 @@
 package visao;
-import modelo.Servicos;
+import modelo.Servico;
 //teste
 public class UsaMenus{
-    public Servicos s;
+    public Servico s;
     public UsaMenus() {
-        this.s = new Servicos();
+        this.s = new Servico();
     }
     public void teste(){
         System.out.println("nome: "+ s.getNome());
