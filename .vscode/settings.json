@@ -1,0 +1,6 @@
+{
+    "java.project.sourcePaths": [
+        "Sistema-reserva-barbeiro"
+    ],
+    "java.compile.nullAnalysis.mode": "automatic"
+}
