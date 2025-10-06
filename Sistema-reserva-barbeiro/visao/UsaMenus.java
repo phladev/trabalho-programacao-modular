@@ -80,10 +80,19 @@ public class UsaMenus {
                         System.out.println("Voltando ao menu principal...");
                         break;
                     case 1:
-                        menuCliente.consultarInformacoesClientes();
+                        menuCliente.cadastrarCliente();
                         break;
                     case 2:
-                        menuCliente.consultarAgendamentosCliente(bancoDeDados.getAgendamentos());
+                        menuCliente.atualizarCliente();
+                        break;
+                    case 3:
+                        menuCliente.removerCliente();
+                        break;
+                    case 4:
+                        menuCliente.buscarCLientePorId();
+                        break;
+                    case 5:
+                        menuCliente.listarTodosClientes();
                         break;
                     default:
                         System.out.println("Opção inválida!");
