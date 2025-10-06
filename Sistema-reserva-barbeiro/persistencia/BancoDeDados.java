@@ -70,7 +70,7 @@ public class BancoDeDados {
     this.agendamentos = agendamentos;
   }
   
-  public int getProximoId() {
+  public Integer getProximoId() {
     int maxId = 0;
     
     for (Cliente cliente : clientes.buscarTodos()) {
