@@ -120,7 +120,19 @@ public class UsaMenus {
                         System.out.println("Voltando ao menu principal...");
                         break;
                     case 1:
-                        menuServico.consultarServicos();
+                        menuServico.cadastrarServico();
+                        break;
+                    case 2:
+                        menuServico.atualizarServico();
+                        break;
+                    case 3:
+                        menuServico.removerServico();
+                        break;
+                    case 4:
+                        menuServico.buscarServicoPorId();
+                        break;
+                    case 5:
+                        menuServico.listarTodosServicos();
                         break;
                     default:
                         System.out.println("Opção inválida!");
