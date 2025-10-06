@@ -3,6 +3,8 @@ package visao;
 import modelo.Cliente;
 import persistencia.BancoDeDados;
 import persistencia.Persistente;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuCliente {
@@ -14,6 +16,36 @@ public class MenuCliente {
     this.clientes = bancoDeDados.getClientes();
     this.bancoDeDados = bancoDeDados;
     this.scanner = scanner;
+  }
+
+  public Cliente selecionarCliente() {
+    if (clientes.isEmpty()) {
+      System.out.println("Nenhum cliente cadastrado.");
+      return null;
+    }
+    
+    System.out.println("Clientes disponíveis:");
+    List<Cliente> listaClientes = clientes.buscarTodos();
+    for (int i = 0; i < listaClientes.size(); i++) {
+      System.out.println((i + 1) + " - " + listaClientes.get(i).getNome());
+    }
+    System.out.print("Escolha o cliente: ");
+    
+    if (!scanner.hasNextInt()) {
+      System.out.println("Por favor, digite apenas números!");
+      scanner.nextLine();
+      return null;
+    }
+    
+    int escolhaCliente = scanner.nextInt();
+    scanner.nextLine();
+    
+    if (escolhaCliente < 1 || escolhaCliente > listaClientes.size()) {
+      System.out.println("Cliente inválido!");
+      return null;
+    }
+    
+    return listaClientes.get(escolhaCliente - 1);
   }
   
   public void cadastrarCliente() {
