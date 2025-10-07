@@ -4,6 +4,7 @@ import modelo.Agendamento;
 import modelo.Barbeiro;
 import modelo.Cliente;
 import modelo.Servico;
+import modelo.ServicoAgendamento;
 
 public class BancoDeDados {
   private Persistente<Cliente> clientes;
@@ -35,15 +36,15 @@ public class BancoDeDados {
     barbeiros.inserir(barbeiro1);
     barbeiros.inserir(barbeiro2);
     
-    Servico servico1 = new Servico(3, "Corte masculino", 25.0, 30.0);
-    Servico servico2 = new Servico(4, "Barba", 15.0, 20.0);
-    Servico servico3 = new Servico(5, "Sobrancelha", 25.0, 5.0);
+    Servico servico1 = new Servico(1, "Corte masculino", 25.0, 30.0);
+    Servico servico2 = new Servico(2, "Barba", 15.0, 20.0);
+    Servico servico3 = new Servico(3, "Sobrancelha", 25.0, 5.0);
     servicos.inserir(servico1);
     servicos.inserir(servico2);
     servicos.inserir(servico3);
     
-    Cliente cliente1 = new Cliente(6, "Carlos Oliveira", "11122233344", "11999888777");
-    Cliente cliente2 = new Cliente(7, "Roberto Lima", "55566677788", "11888777666");
+    Cliente cliente1 = new Cliente(1, "Carlos Oliveira", "11122233344", "11999888777");
+    Cliente cliente2 = new Cliente(2, "Roberto Lima", "55566677788", "11888777666");
     clientes.inserir(cliente1);
     clientes.inserir(cliente2);
   }
@@ -80,7 +81,7 @@ public class BancoDeDados {
     this.agendamentos = agendamentos;
   }
   
-  public Integer getProximoId() {
+  public Integer getProximoIdCliente() {
     int maxId = 0;
     
     for (Cliente cliente : clientes.buscarTodos()) {
@@ -89,11 +90,23 @@ public class BancoDeDados {
       }
     }
     
+    return maxId + 1;
+  }
+  
+  public Integer getProximoIdBarbeiro() {
+    int maxId = 0;
+    
     for (Barbeiro barbeiro : barbeiros.buscarTodos()) {
       if (barbeiro.getId() > maxId) {
         maxId = barbeiro.getId();
       }
     }
+    
+    return maxId + 1;
+  }
+  
+  public Integer getProximoIdServico() {
+    int maxId = 0;
     
     for (Servico servico : servicos.buscarTodos()) {
       if (servico.getId() > maxId) {
@@ -101,9 +114,29 @@ public class BancoDeDados {
       }
     }
     
+    return maxId + 1;
+  }
+  
+  public Integer getProximoIdAgendamento() {
+    int maxId = 0;
+    
     for (Agendamento agendamento : agendamentos.buscarTodos()) {
       if (agendamento.getId() > maxId) {
         maxId = agendamento.getId();
+      }
+    }
+    
+    return maxId + 1;
+  }
+
+  public Integer getProximoIdServicoAgendamento() {
+    int maxId = 0;
+    
+    for (Agendamento agendamento : agendamentos.buscarTodos()) {
+      for (ServicoAgendamento servicoAgendamento : agendamento.getServicos()) {
+        if (servicoAgendamento.getId() > maxId) {
+          maxId = servicoAgendamento.getId();
+        }
       }
     }
     

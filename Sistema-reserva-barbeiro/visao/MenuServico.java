@@ -90,7 +90,7 @@ public class MenuServico {
     double preco = scanner.nextDouble();
     scanner.nextLine();
 
-    Integer id = bancoDeDados.getProximoId();
+    Integer id = bancoDeDados.getProximoIdServico();
     
     Servico novoServico = new Servico(id, nome, tempo, preco);
     servicos.inserir(novoServico);

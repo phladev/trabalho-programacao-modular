@@ -25,7 +25,7 @@ public class MenuBarbeiro {
     System.out.print("Digite o CPF do barbeiro [XXX.XXX.XXX-XX]: ");
     String cpf = scanner.nextLine();
 
-    Integer id = bancoDeDados.getProximoId();
+    Integer id = bancoDeDados.getProximoIdBarbeiro();
 
     Barbeiro barbeiro = new Barbeiro(id, nome, cpf, telefone);
     

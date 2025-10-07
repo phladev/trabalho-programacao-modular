@@ -54,11 +54,11 @@ public class MenuAgendamento {
       return;
     }
     
-    Integer novoId = bancoDeDados.getProximoId();
+    Integer novoId = bancoDeDados.getProximoIdAgendamento();
     Agendamento agendamento = new Agendamento(novoId, cliente, barbeiro, dataHoraSelecionada);
 
     for (Servico servico : servicos) {
-      Integer idServicoAgendamento = bancoDeDados.getProximoId() + 1;
+      Integer idServicoAgendamento = bancoDeDados.getProximoIdServicoAgendamento();
       ServicoAgendamento servicoAgendamento = new ServicoAgendamento(idServicoAgendamento, servico);
       agendamento.adicionarServico(servicoAgendamento);
     }

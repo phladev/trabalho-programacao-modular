@@ -56,7 +56,7 @@ public class MenuCliente {
     System.out.print("Digite o CPF do cliente [XXX.XXX.XXX-XX]: ");
     String cpf = scanner.nextLine();
 
-    Integer id = bancoDeDados.getProximoId();
+    Integer id = bancoDeDados.getProximoIdCliente();
 
     Cliente cliente = new Cliente(id, nome, cpf, telefone);
     clientes.inserir(cliente);
