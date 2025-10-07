@@ -149,7 +149,7 @@ public class MenuBarbeiro {
 
     System.out.println("Lista de todos os barbeiros:");
     for (Barbeiro barbeiro : listaBarbeiros) {
-      System.out.println(barbeiro);
+      System.out.println("\n" + barbeiro);
     }
   }
 }

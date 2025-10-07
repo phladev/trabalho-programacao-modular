@@ -129,7 +129,7 @@ public class MenuCliente {
 
     System.out.println("Lista de todos os clientes:");
     for (Cliente cliente : listaClientes) {
-      System.out.println(cliente);
+      System.out.println("\n" + cliente);
     }
   }
 

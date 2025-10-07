@@ -229,7 +229,7 @@ public class MenuAgendamento {
       return;
     }
     for (Agendamento agendamento : listaAgendamentos) {
-      System.out.println(agendamento);
+      System.out.println("\n" + agendamento);
     }
   }
   
