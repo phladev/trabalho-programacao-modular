@@ -81,7 +81,7 @@ public class MenuAgendamento {
                           " | Barbeiro: " + agendamento.getBarbeiro().getNome());
       }
     }
-    
+
     if (agendamentosAtivos.isEmpty()) {
       System.out.println("Nenhum agendamento ativo encontrado.");
       return;
@@ -107,6 +107,32 @@ public class MenuAgendamento {
       System.out.println("Agendamento cancelado com sucesso!");
     } else {
       System.out.println("Opção inválida!");
+    }
+  }
+
+  public void buscarAgendamentoPorId() {
+    System.out.print("Digite o ID do agendamento que deseja consultar: ");
+    int id = scanner.nextInt();
+    scanner.nextLine();
+
+    Agendamento agendamento = agendamentos.buscarPorId(id);
+    if (agendamento == null) {
+      System.out.println("Agendamento com ID " + id + " não encontrado.");
+      return;
+    }
+    System.out.println("Informações do Agendamento:");
+    System.out.println(agendamento);
+  }
+
+  public void listarTodosAgendamentos() {
+    System.out.println("Lista de todos os agendamentos:");
+    List<Agendamento> listaAgendamentos = agendamentos.buscarTodos();
+    if (listaAgendamentos.isEmpty()) {
+      System.out.println("Nenhum agendamento cadastrado.");
+      return;
+    }
+    for (Agendamento agendamento : listaAgendamentos) {
+      System.out.println(agendamento);
     }
   }
 }

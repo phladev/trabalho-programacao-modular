@@ -163,10 +163,19 @@ public class UsaMenus {
                         menuAgendamento.agendarServico(menuCliente, menuBarbeiro, menuServico);
                         break;
                     case 2:
+                        break;
+                    case 3:
                         menuAgendamento.desagendarServico();
+                        break;
+                    case 4:
+                        menuAgendamento.buscarAgendamentoPorId();
+                        break;
+                    case 5:
+                        menuAgendamento.listarTodosAgendamentos();
                         break;
                     default:
                         System.out.println("Opção inválida!");
+                        
                 }
             } else {
                 System.out.println("Por favor, digite apenas números!");
