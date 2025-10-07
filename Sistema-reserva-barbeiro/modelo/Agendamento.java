@@ -11,16 +11,12 @@ public class Agendamento extends Entidade {
     private LocalDateTime dataHora;
     private List<ServicoAgendamento> servicos;
     private StatusAgendamento status;
-    private double valorTotal;
-    private double tempoTotal;
 
     public Agendamento(){
         super();
         cliente = null;
         barbeiro = null;
         dataHora = null;
-        valorTotal = 0.0;
-        tempoTotal = 0.0;
         servicos = new ArrayList<>();
         status = StatusAgendamento.AGENDADO;
     }

@@ -1,7 +1,6 @@
 package visao;
 
 import modelo.Cliente;
-import modelo.Servico;
 import persistencia.BancoDeDados;
 import persistencia.Persistente;
 

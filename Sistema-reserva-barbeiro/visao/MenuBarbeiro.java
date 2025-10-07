@@ -1,7 +1,6 @@
 package visao;
 
 import modelo.Barbeiro;
-import modelo.Servico;
 import persistencia.BancoDeDados;
 import persistencia.Persistente;
 import java.util.List;
