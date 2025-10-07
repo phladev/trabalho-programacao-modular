@@ -83,9 +83,23 @@ public class Barbeiro extends Entidade {
   }
 
   public String toString() {
+    StringBuilder agendamentosInfo = new StringBuilder();
+
+    for (Agendamento agendamento : agendamentos) {
+      agendamentosInfo.append("\n  - ID: ").append(agendamento.getId())
+                      .append(", Cliente: ").append(agendamento.getCliente().getNome())
+                      .append(", Data e Hora: ").append(agendamento.getDataHora())
+                      .append(", Status: ").append(agendamento.getStatus());
+    }
+
     return "Id do Barbeiro: " + getId() + 
             "\nNome: " + getNome() +
             "\nCPF: " + getCpf() +
-            "\nTelefone: " + getTelefone();
+            "\nTelefone: " + getTelefone() +
+            "\nDias disponíveis: " + (horarioDisponivelList.isEmpty() ? "Nenhum" : String.join(", ", horarioDisponivelList)) +
+            "\nNúmero de agendamentos: " + agendamentos.size() + 
+            "\nAgendamentos: " + (agendamentos.isEmpty() ? "Nenhum" : agendamentosInfo.toString());
+
+
   }
 }

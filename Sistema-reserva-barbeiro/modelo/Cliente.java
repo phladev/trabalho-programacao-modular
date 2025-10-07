@@ -62,9 +62,20 @@ public class Cliente extends Entidade{
     }
 
     public String toString(){
+        StringBuilder agendamentosInfo = new StringBuilder();
+        for (Agendamento agendamento : agendamentos) {
+            agendamentosInfo.append("\n  - ID: ").append(agendamento.getId())
+                            .append(", Cliente: ").append(agendamento.getCliente().getNome())
+                            .append(", Data e Hora: ").append(agendamento.getDataHora())
+                            .append(", Status: ").append(agendamento.getStatus());
+        }
+        
         return "Id do Cliente: " + getId() + 
                 "\nNome: " + getNome() +
                 "\nCPF: " + getCpf() +
-                "\nTelefone: " + getTelefone();
+                "\nTelefone: " + getTelefone() +
+                "\nNúmero de Agendamentos: " + agendamentos.size() +
+                "\nAgendamentos: " + (agendamentos.isEmpty() ? "Nenhum" : agendamentosInfo.toString());
+
     }
 }

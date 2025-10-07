@@ -1,6 +1,7 @@
 package visao;
 
 import modelo.Cliente;
+import modelo.Servico;
 import persistencia.BancoDeDados;
 import persistencia.Persistente;
 
@@ -121,8 +122,14 @@ public class MenuCliente {
   }
 
   public void listarTodosClientes() {
+    List<Cliente> listaClientes = clientes.buscarTodos();
+    if (listaClientes.isEmpty()) {
+      System.out.println("Nenhum cliente cadastrado.");
+      return;
+    }
+
     System.out.println("Lista de todos os clientes:");
-    for (Cliente cliente : clientes.buscarTodos()) {
+    for (Cliente cliente : listaClientes) {
       System.out.println(cliente);
     }
   }

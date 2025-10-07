@@ -1,6 +1,7 @@
 package visao;
 
 import modelo.Barbeiro;
+import modelo.Servico;
 import persistencia.BancoDeDados;
 import persistencia.Persistente;
 import java.util.List;
@@ -141,8 +142,14 @@ public class MenuBarbeiro {
   }
 
   public void listarTodosBarbeiros() {
+    List<Barbeiro> listaBarbeiros = barbeiros.buscarTodos();
+    if (listaBarbeiros.isEmpty()) {
+      System.out.println("Nenhum barbeiro cadastrado.");
+      return;
+    }
+
     System.out.println("Lista de todos os barbeiros:");
-    for (Barbeiro barbeiro : barbeiros.buscarTodos()) {
+    for (Barbeiro barbeiro : listaBarbeiros) {
       System.out.println(barbeiro);
     }
   }
