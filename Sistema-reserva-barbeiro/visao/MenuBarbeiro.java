@@ -28,6 +28,27 @@ public class MenuBarbeiro {
     Integer id = bancoDeDados.getProximoId();
 
     Barbeiro barbeiro = new Barbeiro(id, nome, cpf, telefone);
+    
+    System.out.println("\nAdicione os horários disponíveis do barbeiro:");
+    System.out.println("Formato: DD-MM-AAAA HH:MM (ex: 07-10-2025 09:00)");
+    System.out.println("Digite 'fim' para finalizar");
+    
+    while (true) {
+      System.out.print("Horário disponível: ");
+      String horario = scanner.nextLine();
+      
+      if (horario.equalsIgnoreCase("fim")) {
+        break;
+      }
+      
+      if (horario.matches("\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}")) {
+        barbeiro.adicionarDiaDisponivel(horario);
+        System.out.println("Horário adicionado com sucesso!");
+      } else {
+        System.out.println("Formato inválido! Use: DD-MM-AAAA HH:MM");
+      }
+    }
+    
     barbeiros.inserir(barbeiro);
     System.out.println("Barbeiro cadastrado com sucesso! ID: " + barbeiro.getId());
   }

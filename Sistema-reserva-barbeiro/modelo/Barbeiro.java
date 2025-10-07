@@ -8,6 +8,7 @@ public class Barbeiro extends Entidade {
   private String cpf;
   private String telefone;
   private List<Agendamento> agendamentos;
+  private List<String> horarioDisponivelList;
 
   public Barbeiro() {
     super();
@@ -15,6 +16,7 @@ public class Barbeiro extends Entidade {
     cpf = null;
     telefone = null;
     agendamentos = new ArrayList<>();
+    horarioDisponivelList = new ArrayList<>();
   }
 
   public Barbeiro(Integer id, String nome, String cpf, String telefone) {
@@ -23,6 +25,7 @@ public class Barbeiro extends Entidade {
     this.cpf = cpf;
     this.telefone = telefone;
     agendamentos = new ArrayList<>();
+    horarioDisponivelList = new ArrayList<>();
   }
 
   public String getNome() {
@@ -59,6 +62,24 @@ public class Barbeiro extends Entidade {
 
   public void adicionarAgendamento(Agendamento agendamento) {
     agendamentos.add(agendamento);
+  }
+
+  public List<String> getHorarioDisponivelList() {
+    return horarioDisponivelList;
+  }
+
+  public void setHorarioDisponivelList(List<String> horarioDisponivelList) {
+    this.horarioDisponivelList = horarioDisponivelList;
+  }
+
+  public void adicionarDiaDisponivel(String dia) {
+    if (!horarioDisponivelList.contains(dia)) {
+      horarioDisponivelList.add(dia);
+    }
+  }
+
+  public void removerDiaDisponivel(String dia) {
+    horarioDisponivelList.remove(dia);
   }
 
   public String toString() {

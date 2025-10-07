@@ -163,6 +163,7 @@ public class UsaMenus {
                         menuAgendamento.agendarServico(menuCliente, menuBarbeiro, menuServico);
                         break;
                     case 2:
+                        menuAgendamento.atualizarServico();
                         break;
                     case 3:
                         menuAgendamento.desagendarServico();

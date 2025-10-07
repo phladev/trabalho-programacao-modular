@@ -3,6 +3,8 @@ package visao;
 import modelo.Servico;
 import persistencia.BancoDeDados;
 import persistencia.Persistente;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,7 +19,9 @@ public class MenuServico {
     this.scanner = scanner;
   }
   
-  public Servico selecionarServico() {
+  public List<Servico> selecionarServico() {
+    List<Servico> servicosSelecionadosList = new ArrayList<>();
+
     if (servicos.isEmpty()) {
       System.out.println("Nenhum serviço cadastrado.");
       return null;
@@ -25,27 +29,49 @@ public class MenuServico {
     
     System.out.println("\nServiços disponíveis:");
     List<Servico> listaServicos = servicos.buscarTodos();
-    for (int i = 0; i < listaServicos.size(); i++) {
+
+    int escolhaServico = -1;
+
+    boolean selecionouPeloMenosUm = false;
+    
+    do {
+      for (int i = 0; i < listaServicos.size(); i++) {
       Servico s = listaServicos.get(i);
       System.out.println((i + 1) + " - " + s.getNome() + " (R$ " + s.getPreco() + ")");
-    }
-    System.out.print("Escolha o serviço: ");
-    
-    if (!scanner.hasNextInt()) {
+      }
+      System.out.print("Escolha o serviço para adicionar (0 para finalizar seleção): ");
+
+      if (!scanner.hasNextInt()) {
       System.out.println("Por favor, digite apenas números!");
       scanner.nextLine();
       return null;
-    }
-    
-    int escolhaServico = scanner.nextInt();
-    scanner.nextLine();
-    
-    if (escolhaServico < 1 || escolhaServico > listaServicos.size()) {
+      }
+
+      escolhaServico = scanner.nextInt();
+      scanner.nextLine();
+
+      if (escolhaServico == 0) {
+        if (!selecionouPeloMenosUm) {
+          System.out.println("Selecione pelo menos um serviço antes de finalizar.");
+          continue;
+        } else {
+          break;
+        }
+      }
+
+      if (escolhaServico < 1 || escolhaServico > listaServicos.size()) {
       System.out.println("Serviço inválido!");
-      return null;
-    }
+      continue;
+      }
+
+      Servico servicoEscolhido = listaServicos.get(escolhaServico - 1);
+      servicosSelecionadosList.add(servicoEscolhido);
+      selecionouPeloMenosUm = true;
+      System.out.println("Serviço " + servicoEscolhido.getNome() + " adicionado.");
+
+    } while (true);
     
-    return listaServicos.get(escolhaServico - 1);
+    return servicosSelecionadosList;
   }
 
   public void cadastrarServico() {

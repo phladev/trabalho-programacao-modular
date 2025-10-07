@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +11,16 @@ public class Agendamento extends Entidade {
     private LocalDateTime dataHora;
     private List<ServicoAgendamento> servicos;
     private StatusAgendamento status;
+    private double valorTotal;
+    private double tempoTotal;
 
     public Agendamento(){
         super();
         cliente = null;
         barbeiro = null;
         dataHora = null;
+        valorTotal = 0.0;
+        tempoTotal = 0.0;
         servicos = new ArrayList<>();
         status = StatusAgendamento.AGENDADO;
     }
@@ -37,8 +42,8 @@ public class Agendamento extends Entidade {
         return barbeiro;
     }
 
-    public LocalDateTime getDataHora() {
-        return dataHora;
+    public String getDataHora() {
+        return dataHora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 
     public StatusAgendamento getStatus() {
@@ -79,16 +84,40 @@ public class Agendamento extends Entidade {
                       .sum();
     }
 
+    public double calcularTempoTotal() {
+        return servicos.stream()
+                      .mapToDouble(ServicoAgendamento::getTempo)
+                      .sum();
+    }
+
+    public double getValorTotal() {
+        return calcularValorTotal();
+    }
+
+    public double getTempoTotal() {
+        return calcularTempoTotal();
+    }
+
     @Override
     public String toString() {
         String clienteNome = (cliente != null) ? cliente.getNome() : "N/A";
         String barbeiroNome = (barbeiro != null) ? barbeiro.getNome() : "N/A";
         
+        StringBuilder servicesInfo = new StringBuilder();
+        if (!servicos.isEmpty()) {
+            servicesInfo.append("\n Serviços:");
+            for (ServicoAgendamento sa : servicos) {
+                servicesInfo.append("\n   - ").append(sa.toString());
+            }
+        }
+        
         return "Id do agendamento: " + getId() +
             "\n Nome Cliente: " + clienteNome +
             "\n Nome do Barbeiro: " + barbeiroNome +
-            "\n Data e hora: " + dataHora +
-            "\n Status: " + status +
-            "\n Valor total: R$ " + String.format("%.2f", calcularValorTotal());
+            "\n Data e hora: " + getDataHora() +
+            "\n Status: " + getStatus() +
+            servicesInfo.toString() +
+            "\n Valor total: R$ " + String.format("%.2f", calcularValorTotal()) +
+            "\n Tempo total: " + String.format("%.0f", calcularTempoTotal()) + " minutos";
     }
 }

@@ -21,7 +21,17 @@ public class BancoDeDados {
   
   private void inicializarDados() {
     Barbeiro barbeiro1 = new Barbeiro(1, "João Silva", "12345678901", "11987654321");
+    barbeiro1.adicionarDiaDisponivel("07-10-2025 09:00");
+    barbeiro1.adicionarDiaDisponivel("07-10-2025 14:00");
+    barbeiro1.adicionarDiaDisponivel("08-10-2025 10:00");
+    barbeiro1.adicionarDiaDisponivel("09-10-2025 15:00");
+    
     Barbeiro barbeiro2 = new Barbeiro(2, "Pedro Santos", "98765432109", "11876543210");
+    barbeiro2.adicionarDiaDisponivel("07-10-2025 08:00");
+    barbeiro2.adicionarDiaDisponivel("08-10-2025 13:00");
+    barbeiro2.adicionarDiaDisponivel("09-10-2025 16:00");
+    barbeiro2.adicionarDiaDisponivel("10-10-2025 11:00");
+    
     barbeiros.inserir(barbeiro1);
     barbeiros.inserir(barbeiro2);
     
