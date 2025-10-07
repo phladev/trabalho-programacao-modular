@@ -174,7 +174,7 @@ public class UsaMenus {
             }
         } while (opcao != 0);
     }
-    
+
     private void menuBarbeiro() {
         int opcao = -1;
         do {
@@ -191,10 +191,19 @@ public class UsaMenus {
                         System.out.println("Voltando ao menu principal...");
                         break;
                     case 1:
-                        menuBarbeiro.consultarInformacoesBarbeiros();
+                        menuBarbeiro.cadastrarBarbeiro();
                         break;
                     case 2:
-                        menuBarbeiro.consultarAgendamentosBarbeiro(bancoDeDados.getAgendamentos());
+                        menuBarbeiro.atualizarBarbeiro();
+                        break;
+                    case 3:
+                        menuBarbeiro.removerBarbeiro();
+                        break;
+                    case 4:
+                        menuBarbeiro.buscarBarbeiroPorId();
+                        break;
+                    case 5:
+                        menuBarbeiro.listarTodosBarbeiros();
                         break;
                     default:
                         System.out.println("Opção inválida!");
