@@ -39,7 +39,7 @@ public class Agendamento extends Entidade {
     }
 
     public String getDataHora() {
-        return dataHora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        return dataHora.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
     }
 
     public StatusAgendamento getStatus() {

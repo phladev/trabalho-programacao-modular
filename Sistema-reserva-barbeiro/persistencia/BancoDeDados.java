@@ -37,7 +37,7 @@ public class BancoDeDados {
     
     Servico servico1 = new Servico(3, "Corte masculino", 25.0, 30.0);
     Servico servico2 = new Servico(4, "Barba", 15.0, 20.0);
-    Servico servico3 = new Servico(5, "Corte + Barba", 35.0, 45.0);
+    Servico servico3 = new Servico(5, "Sobrancelha", 25.0, 5.0);
     servicos.inserir(servico1);
     servicos.inserir(servico2);
     servicos.inserir(servico3);
