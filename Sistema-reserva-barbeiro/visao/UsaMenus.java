@@ -2,6 +2,11 @@ package visao;
 
 import java.util.Scanner;
 import persistencia.BancoDeDados;
+import javax.swing.SwingUtilities;
+import visao.BarbeiroGUI;
+import visao.ClienteGUI;
+
+
 
 public class UsaMenus {
     private Scanner scanner;
@@ -20,6 +25,19 @@ public class UsaMenus {
         this.menuAgendamento = new MenuAgendamento(bancoDeDados, scanner);
     }
     
+    private void abrirClienteGUI() {
+    SwingUtilities.invokeLater(() -> {
+        new ClienteGUI(bancoDeDados);
+    });
+}
+
+    private void abrirBarbeiroGUI() {
+    SwingUtilities.invokeLater(() -> {
+        new BarbeiroGUI(bancoDeDados);
+    });
+}
+
+
     public void iniciarSistema() {
         int opcao = -1;
         
@@ -58,6 +76,12 @@ public class UsaMenus {
                 break;
             case 4:
                 menuBarbeiro();
+            break;
+                case 6:
+                abrirBarbeiroGUI(); // abre a janela de barbeiros
+                break;
+            case 7:
+                abrirClienteGUI(); // abre a janela de clientes
                 break;
             default:
                 System.out.println("Opção inválida! Tente novamente.");
