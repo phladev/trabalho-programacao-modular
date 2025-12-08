@@ -60,7 +60,7 @@ public class BarbeiroGUI extends JFrame {
     private void atualizarTabela() {
         modeloTabela.setRowCount(0);
         for (Barbeiro b : banco.getBarbeiros().buscarTodos()) {
-            modeloTabela.addRow(new Object[]{b.getNome(), b.getId(), b.getCpf(), b.getTelefone()});
+            modeloTabela.addRow(new Object[]{b.getId(), b.getNome(), b.getCpf(), b.getTelefone()});
         }
     }
     private void limparCampos() {

@@ -144,6 +144,7 @@ public class MenuAgendamento {
         } else {
           System.out.println("Atualização de data e hora cancelada.");
         }
+        break;
       case 2:
         System.out.println("Escolha o novo status:");
         for (StatusAgendamento status : StatusAgendamento.values()) {

@@ -3,8 +3,6 @@ package visao;
 import java.util.Scanner;
 import persistencia.BancoDeDados;
 import javax.swing.SwingUtilities;
-import visao.BarbeiroGUI;
-import visao.ClienteGUI;
 
 
 
@@ -78,10 +76,10 @@ public class UsaMenus {
                 menuBarbeiro();
             break;
                 case 6:
-                abrirBarbeiroGUI(); // abre a janela de barbeiros
+                abrirBarbeiroGUI();
                 break;
             case 7:
-                abrirClienteGUI(); // abre a janela de clientes
+                abrirClienteGUI();
                 break;
             default:
                 System.out.println("Opção inválida! Tente novamente.");

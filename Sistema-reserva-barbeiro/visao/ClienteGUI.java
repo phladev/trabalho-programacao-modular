@@ -64,7 +64,7 @@ public class ClienteGUI extends JFrame {
     private void atualizarTabela() {
         modeloTabela.setRowCount(0);
         for (Cliente b : banco.getClientes().buscarTodos()) {
-            modeloTabela.addRow(new Object[]{b.getNome(), b.getId(), b.getCpf(), b.getTelefone()});
+            modeloTabela.addRow(new Object[]{b.getId(), b.getNome(), b.getCpf(), b.getTelefone()});
         }
     }
     private void limparCampos() {
@@ -124,7 +124,7 @@ public class ClienteGUI extends JFrame {
             Cliente b = banco.getClientes().buscarPorId(id);
             modeloTabela.setRowCount(0);
             if (b != null) {
-                modeloTabela.addRow(new Object[]{ b.getNome(), b.getId(), b.getCpf(), b.getTelefone()});
+                modeloTabela.addRow(new Object[]{b.getId(), b.getNome(), b.getCpf(), b.getTelefone()});
             } else {
                 JOptionPane.showMessageDialog(this, "Cliente com ID " + id + " não encontrado.");
             }
