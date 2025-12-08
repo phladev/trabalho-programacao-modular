@@ -105,21 +105,15 @@ public class JanelaPrincipal extends JFrame {
     }
     
     private void abrirServicoGUI() {
-        JOptionPane.showMessageDialog(
-            this,
-            "Painel de Serviços ainda não implementado.\nEm desenvolvimento...",
-            "Em Desenvolvimento",
-            JOptionPane.INFORMATION_MESSAGE
-        );
+        SwingUtilities.invokeLater(() -> {
+            new ServicoGUI(bancoDeDados);
+        });
     }
     
     private void abrirAgendamentoGUI() {
-        JOptionPane.showMessageDialog(
-            this,
-            "Painel de Agendamentos ainda não implementado.\nEm desenvolvimento...",
-            "Em Desenvolvimento",
-            JOptionPane.INFORMATION_MESSAGE
-        );
+        SwingUtilities.invokeLater(() -> {
+            new AgendamentoGUI(bancoDeDados);
+        });
     }
     
     public static void main(String[] args) {

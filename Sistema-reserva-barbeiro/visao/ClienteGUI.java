@@ -36,8 +36,19 @@ public class ClienteGUI extends JFrame {
         campoTelefone = new JTextField();
         painelTopo.add(campoTelefone);
         add(painelTopo, BorderLayout.NORTH);
-        modeloTabela = new DefaultTableModel(new String[]{"ID", "Nome", "CPF", "Telefone"}, 0);
+        modeloTabela = new DefaultTableModel(new String[]{"ID", "Nome", "CPF", "Telefone"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         tabela = new JTable(modeloTabela);
+        tabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tabela.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting() && tabela.getSelectedRow() != -1) {
+                preencherCamposDaLinha();
+            }
+        });
         add(new JScrollPane(tabela), BorderLayout.CENTER);
         JPanel painelBotoes = new JPanel(new FlowLayout());
         JButton btnCadastrar = new JButton("Cadastrar");
@@ -73,6 +84,17 @@ public class ClienteGUI extends JFrame {
         campoCpf.setText("");
         campoTelefone.setText("");
     }
+    
+    private void preencherCamposDaLinha() {
+        int linhaSelecionada = tabela.getSelectedRow();
+        if (linhaSelecionada != -1) {
+            campoId.setText(modeloTabela.getValueAt(linhaSelecionada, 0).toString());
+            campoNome.setText(modeloTabela.getValueAt(linhaSelecionada, 1).toString());
+            campoCpf.setText(modeloTabela.getValueAt(linhaSelecionada, 2).toString());
+            campoTelefone.setText(modeloTabela.getValueAt(linhaSelecionada, 3).toString());
+        }
+    }
+    
     private void cadastrar() {
         try {
             String nome = campoNome.getText();
@@ -85,8 +107,9 @@ public class ClienteGUI extends JFrame {
             Cliente novo = new Cliente(id, nome, cpf, telefone);
             banco.getClientes().inserir(novo);
             atualizarTabela();
+            JOptionPane.showMessageDialog(this, "Cliente cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     private void atualizar() {
@@ -102,8 +125,9 @@ public class ClienteGUI extends JFrame {
             if (!campoTelefone.getText().isEmpty()) b.setTelefone(campoTelefone.getText());
             banco.getClientes().alterar(b);
             atualizarTabela();
+            JOptionPane.showMessageDialog(this, "Cliente atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Digite um ID válido!");
+            JOptionPane.showMessageDialog(this, "Digite um ID válido!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     private void remover() {
@@ -111,7 +135,9 @@ public class ClienteGUI extends JFrame {
             int id = Integer.parseInt(campoId.getText());
             boolean sucesso = banco.getClientes().excluir(id);
             if (!sucesso) {
-                JOptionPane.showMessageDialog(this, "Cliente com ID " + id + " não encontrado.");
+                JOptionPane.showMessageDialog(this, "Cliente com ID " + id + " não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Cliente removido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }
             atualizarTabela();
         } catch (NumberFormatException ex) {

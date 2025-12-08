@@ -42,6 +42,10 @@ public class Agendamento extends Entidade {
         return dataHora.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
     }
 
+    public LocalDateTime getDataHoraLocalDateTime() {
+        return dataHora;
+    }
+
     public StatusAgendamento getStatus() {
         return status;
     }
