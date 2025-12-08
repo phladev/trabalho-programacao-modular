@@ -120,6 +120,7 @@ public class MenuAgendamento {
     System.out.println("\nO que deseja atualizar?");
     System.out.println("1 - Data e Hora");
     System.out.println("2 - Status");
+    System.out.println("3 - Gerenciar Serviços");
     System.out.print("Escolha uma opção: ");
     
     if (!scanner.hasNextInt()) {
@@ -154,6 +155,9 @@ public class MenuAgendamento {
         agendamento.setStatus(StatusAgendamento.valueOf(novoStatus));
         agendamentos.alterar(agendamento);
         System.out.println("Status atualizado com sucesso!");
+        break;
+      case 3:
+        gerenciarServicosAgendamento(agendamento);
         break;
       default:
         System.out.println("Opção inválida!");
@@ -271,5 +275,144 @@ public class MenuAgendamento {
     barbeiro.removerDiaDisponivel(horarioSelecionado);
     
     return dataHora;
+  }
+  
+  private void gerenciarServicosAgendamento(Agendamento agendamento) {
+    int opcao = -1;
+    
+    do {
+      System.out.println("\n=== GERENCIAR SERVIÇOS DO AGENDAMENTO ===");
+      System.out.println("Agendamento ID: " + agendamento.getId());
+      System.out.println("Cliente: " + agendamento.getCliente().getNome());
+      System.out.println("\nServiços atuais:");
+      
+      if (agendamento.getServicos().isEmpty()) {
+        System.out.println("Nenhum serviço no agendamento.");
+      } else {
+        for (int i = 0; i < agendamento.getServicos().size(); i++) {
+          ServicoAgendamento sa = agendamento.getServicos().get(i);
+          System.out.println((i + 1) + " - " + sa.getServico().getNome() + 
+                            " | R$ " + String.format("%.2f", sa.getPreco()) + 
+                            " | " + sa.getTempo() + " min");
+        }
+      }
+      
+      System.out.println("\nValor Total: R$ " + String.format("%.2f", agendamento.getValorTotal()));
+      System.out.println("Tempo Total: " + agendamento.getTempoTotal() + " min");
+      
+      System.out.println("\n1 - Adicionar serviço");
+      System.out.println("2 - Remover serviço");
+      System.out.println("0 - Voltar");
+      System.out.print("Escolha uma opção: ");
+      
+      if (!scanner.hasNextInt()) {
+        System.out.println("Por favor, digite apenas números!");
+        scanner.nextLine();
+        continue;
+      }
+      
+      opcao = scanner.nextInt();
+      scanner.nextLine();
+      
+      switch (opcao) {
+        case 0:
+          System.out.println("Voltando...");
+          break;
+        case 1:
+          adicionarServicoAoAgendamento(agendamento);
+          break;
+        case 2:
+          removerServicoDoAgendamento(agendamento);
+          break;
+        default:
+          System.out.println("Opção inválida!");
+      }
+    } while (opcao != 0);
+    
+    agendamentos.alterar(agendamento);
+  }
+  
+  private void adicionarServicoAoAgendamento(Agendamento agendamento) {
+    if (bancoDeDados.getServicos().isEmpty()) {
+      System.out.println("Nenhum serviço cadastrado no sistema.");
+      return;
+    }
+    
+    System.out.println("\n=== SERVIÇOS DISPONÍVEIS ===");
+    List<Servico> servicosDisponiveis = bancoDeDados.getServicos().buscarTodos();
+    
+    for (int i = 0; i < servicosDisponiveis.size(); i++) {
+      Servico s = servicosDisponiveis.get(i);
+      System.out.println((i + 1) + " - " + s.getNome() + 
+                        " | R$ " + String.format("%.2f", s.getPreco()) + 
+                        " | " + s.getTempo() + " min");
+    }
+    
+    System.out.print("\nEscolha o serviço para adicionar (0 para cancelar): ");
+    
+    if (!scanner.hasNextInt()) {
+      System.out.println("Por favor, digite apenas números!");
+      scanner.nextLine();
+      return;
+    }
+    
+    int escolha = scanner.nextInt();
+    scanner.nextLine();
+    
+    if (escolha == 0) {
+      System.out.println("Operação cancelada.");
+      return;
+    }
+    
+    if (escolha < 1 || escolha > servicosDisponiveis.size()) {
+      System.out.println("Opção inválida!");
+      return;
+    }
+    
+    Servico servicoSelecionado = servicosDisponiveis.get(escolha - 1);
+    Integer novoId = bancoDeDados.getProximoIdAgendamento();
+    ServicoAgendamento novoServicoAgendamento = new ServicoAgendamento(novoId, servicoSelecionado);
+    
+    agendamento.adicionarServico(novoServicoAgendamento);
+    System.out.println("Serviço adicionado com sucesso!");
+  }
+  
+  private void removerServicoDoAgendamento(Agendamento agendamento) {
+    if (agendamento.getServicos().isEmpty()) {
+      System.out.println("Não há serviços para remover.");
+      return;
+    }
+    
+    System.out.println("\n=== REMOVER SERVIÇO ===");
+    for (int i = 0; i < agendamento.getServicos().size(); i++) {
+      ServicoAgendamento sa = agendamento.getServicos().get(i);
+      System.out.println((i + 1) + " - " + sa.getServico().getNome() + 
+                        " | R$ " + String.format("%.2f", sa.getPreco()) + 
+                        " | " + sa.getTempo() + " min");
+    }
+    
+    System.out.print("\nEscolha o serviço para remover (0 para cancelar): ");
+    
+    if (!scanner.hasNextInt()) {
+      System.out.println("Por favor, digite apenas números!");
+      scanner.nextLine();
+      return;
+    }
+    
+    int escolha = scanner.nextInt();
+    scanner.nextLine();
+    
+    if (escolha == 0) {
+      System.out.println("Operação cancelada.");
+      return;
+    }
+    
+    if (escolha < 1 || escolha > agendamento.getServicos().size()) {
+      System.out.println("Opção inválida!");
+      return;
+    }
+    
+    ServicoAgendamento removido = agendamento.getServicos().remove(escolha - 1);
+    System.out.println("Serviço '" + removido.getServico().getNome() + "' removido com sucesso!");
   }
 }

@@ -3,23 +3,31 @@ package modelo;
 public class ServicoAgendamento extends Entidade {
     private Servico servico;
     private String observacoes;
+    private double precoCongelado;
+    private double tempoCongelado;
 
     public ServicoAgendamento() {
       super();
       this.servico = null;
       this.observacoes = "";
+      this.precoCongelado = 0.0;
+      this.tempoCongelado = 0.0;
     }
 
     public ServicoAgendamento(Integer id, Servico servico) {
       super(id);
       this.servico = servico;
       this.observacoes = "";
+      this.precoCongelado = (servico != null) ? servico.getPreco() : 0.0;
+      this.tempoCongelado = (servico != null) ? servico.getTempo() : 0.0;
     }
 
     public ServicoAgendamento(Integer id, Servico servico, String observacoes) {
       super(id);
       this.servico = servico;
       this.observacoes = observacoes;
+      this.precoCongelado = (servico != null) ? servico.getPreco() : 0.0;
+      this.tempoCongelado = (servico != null) ? servico.getTempo() : 0.0;
     }
 
     public Servico getServico() {
@@ -28,14 +36,18 @@ public class ServicoAgendamento extends Entidade {
 
     public void setServico(Servico servico) {
       this.servico = servico;
+      if (servico != null) {
+        this.precoCongelado = servico.getPreco();
+        this.tempoCongelado = servico.getTempo();
+      }
     }
 
     public double getPreco() {
-      return (servico != null) ? servico.getPreco() : 0.0;
+      return precoCongelado;
     }
 
     public double getTempo() {
-      return (servico != null) ? servico.getTempo() : 0.0;
+      return tempoCongelado;
     }
 
     public String getObservacoes() {
