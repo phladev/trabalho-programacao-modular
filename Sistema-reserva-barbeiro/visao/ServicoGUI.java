@@ -147,7 +147,15 @@ public class ServicoGUI extends JFrame {
                 throw new IllegalArgumentException("O tempo deve ser maior que zero!");
             }
             
-            Integer id = banco.getProximoIdServico();
+            Integer id;
+            if (!campoId.getText().trim().isEmpty()) {
+                id = Integer.parseInt(campoId.getText());
+                if (banco.getServicos().buscarPorId(id) != null) {
+                    throw new IllegalArgumentException("Escolha um id que ainda não exista ou deixe o campo em branco para ser gerado automaticamente");
+                }
+            } else {
+                id = banco.getProximoIdServico();
+            }
             Servico novo = new Servico(id, nome, preco, tempo);
             banco.getServicos().inserir(novo);
             atualizarTabela();

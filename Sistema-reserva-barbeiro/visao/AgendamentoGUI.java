@@ -348,11 +348,6 @@ public class AgendamentoGUI extends JFrame {
         int id = (int) modeloTabela.getValueAt(linhaSelecionada, 0);
         Agendamento agendamento = banco.getAgendamentos().buscarPorId(id);
         
-        if (agendamento.getStatus() == StatusAgendamento.CANCELADO) {
-            JOptionPane.showMessageDialog(this, "Não é possível editar agendamentos cancelados!");
-            return;
-        }
-        
         String[] opcoes = {"Alterar Data/Hora", "Alterar Status", "Gerenciar Serviços", "Cancelar"};
         int escolha = JOptionPane.showOptionDialog(
             this,

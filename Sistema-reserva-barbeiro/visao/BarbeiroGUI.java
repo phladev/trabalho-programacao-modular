@@ -120,7 +120,21 @@ public class BarbeiroGUI extends JFrame {
             if (nome.isEmpty() || cpf.isEmpty() || telefone.isEmpty()) {
                 throw new IllegalArgumentException("Todos os campos devem ser preenchidos!");
             }
-            Integer id = banco.getProximoIdBarbeiro();
+            if (!cpf.matches("\\d+")) {
+                throw new IllegalArgumentException("CPF deve conter apenas números!");
+            }
+            if (!telefone.matches("\\d+")) {
+                throw new IllegalArgumentException("Telefone deve conter apenas números!");
+            }
+            Integer id;
+            if (!campoId.getText().trim().isEmpty()) {
+                id = Integer.parseInt(campoId.getText());
+                if (banco.getBarbeiros().buscarPorId(id) != null) {
+                    throw new IllegalArgumentException("Escolha um id que ainda não exista ou deixe o campo em branco para ser gerado automaticamente");
+                }
+            } else {
+                id = banco.getProximoIdBarbeiro();
+            }
             Barbeiro novo = new Barbeiro(id, nome, cpf, telefone);
             banco.getBarbeiros().inserir(novo);
             atualizarTabela();
@@ -139,8 +153,20 @@ public class BarbeiroGUI extends JFrame {
                 return;
             }
             if (!campoNome.getText().isEmpty()) b.setNome(campoNome.getText());
-            if (!campoCpf.getText().isEmpty()) b.setCpf(campoCpf.getText());
-            if (!campoTelefone.getText().isEmpty()) b.setTelefone(campoTelefone.getText());
+            if (!campoCpf.getText().isEmpty()) {
+                String cpf = campoCpf.getText();
+                if (!cpf.matches("\\d+")) {
+                    throw new IllegalArgumentException("CPF deve conter apenas números!");
+                }
+                b.setCpf(cpf);
+            }
+            if (!campoTelefone.getText().isEmpty()) {
+                String telefone = campoTelefone.getText();
+                if (!telefone.matches("\\d+")) {
+                    throw new IllegalArgumentException("Telefone deve conter apenas números!");
+                }
+                b.setTelefone(telefone);
+            }
             banco.getBarbeiros().alterar(b);
             atualizarTabela();
             JOptionPane.showMessageDialog(this, "Barbeiro atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
