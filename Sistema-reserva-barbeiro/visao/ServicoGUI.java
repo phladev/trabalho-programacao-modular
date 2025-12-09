@@ -57,20 +57,40 @@ public class ServicoGUI extends JFrame {
         JButton btnRemover = new JButton("Remover");
         JButton btnBuscar = new JButton("Buscar por ID");
         JButton btnListar = new JButton("Listar Todos");
+        JButton btnLimpar = new JButton("Limpar Campos");
+        
         painelBotoes.add(btnCadastrar);
         painelBotoes.add(btnAtualizar);
         painelBotoes.add(btnRemover);
         painelBotoes.add(btnBuscar);
         painelBotoes.add(btnListar);
+        painelBotoes.add(btnLimpar);
         add(painelBotoes, BorderLayout.SOUTH);
         
         atualizarTabela();
+        
+        campoId.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void changedUpdate(javax.swing.event.DocumentEvent e) { atualizarBotoes(); }
+            public void removeUpdate(javax.swing.event.DocumentEvent e) { atualizarBotoes(); }
+            public void insertUpdate(javax.swing.event.DocumentEvent e) { atualizarBotoes(); }
+            private void atualizarBotoes() {
+                boolean temId = !campoId.getText().trim().isEmpty();
+                btnAtualizar.setEnabled(temId);
+                btnRemover.setEnabled(temId);
+                btnBuscar.setEnabled(temId);
+            }
+        });
+        
+        btnAtualizar.setEnabled(false);
+        btnRemover.setEnabled(false);
+        btnBuscar.setEnabled(false);
         
         btnCadastrar.addActionListener(e -> cadastrar());
         btnAtualizar.addActionListener(e -> atualizar());
         btnRemover.addActionListener(e -> remover());
         btnBuscar.addActionListener(e -> buscarPorId());
         btnListar.addActionListener(e -> atualizarTabela());
+        btnLimpar.addActionListener(e -> limparCampos());
         
         setVisible(true);
     }
