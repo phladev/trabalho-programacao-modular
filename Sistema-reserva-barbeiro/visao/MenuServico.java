@@ -122,14 +122,14 @@ public class MenuServico {
     System.out.print("Novo tempo do serviço (atual: " + servico.getTempo() + "): ");
     String tempoInput = scanner.nextLine();
     if (!tempoInput.isEmpty()) {
-      double tempo = Double.parseDouble(tempoInput);
+      double tempo = Double.parseDouble(tempoInput.replace(",", "."));
       servico.setTempo(tempo);
     }
     
     System.out.print("Novo preço do serviço (atual: R$ " + servico.getPreco() + "): ");
     String precoInput = scanner.nextLine();
     if (!precoInput.isEmpty()) {
-      double preco = Double.parseDouble(precoInput);
+      double preco = Double.parseDouble(precoInput.replace(",", "."));
       servico.setPreco(preco);
     }
     

@@ -63,10 +63,10 @@ public class ClienteGUI extends JFrame {
         painelBotoes.add(btnListar);
         add(painelBotoes, BorderLayout.SOUTH);
         atualizarTabela();
-        btnCadastrar.addActionListener(e -> { cadastrar(); limparCampos(); });
-        btnAtualizar.addActionListener(e -> { atualizar(); limparCampos(); });
-        btnRemover.addActionListener(e -> { remover(); limparCampos(); });
-        btnBuscar.addActionListener(e -> { buscarPorId(); limparCampos(); });
+        btnCadastrar.addActionListener(e -> cadastrar());
+        btnAtualizar.addActionListener(e -> atualizar());
+        btnRemover.addActionListener(e -> remover());
+        btnBuscar.addActionListener(e -> buscarPorId());
         btnListar.addActionListener(e -> atualizarTabela());
         setVisible(true);
     }
@@ -108,6 +108,7 @@ public class ClienteGUI extends JFrame {
             banco.getClientes().inserir(novo);
             atualizarTabela();
             JOptionPane.showMessageDialog(this, "Cliente cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            limparCampos();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -126,6 +127,7 @@ public class ClienteGUI extends JFrame {
             banco.getClientes().alterar(b);
             atualizarTabela();
             JOptionPane.showMessageDialog(this, "Cliente atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            limparCampos();
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Digite um ID válido!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -133,15 +135,26 @@ public class ClienteGUI extends JFrame {
     private void remover() {
         try {
             int id = Integer.parseInt(campoId.getText());
-            boolean sucesso = banco.getClientes().excluir(id);
-            if (!sucesso) {
+            Cliente cliente = banco.getClientes().buscarPorId(id);
+            if (cliente == null) {
                 JOptionPane.showMessageDialog(this, "Cliente com ID " + id + " não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Cliente removido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                return;
             }
-            atualizarTabela();
+            int confirmacao = JOptionPane.showConfirmDialog(
+                this,
+                "Tem certeza que deseja excluir o cliente \"" + cliente.getNome() + "\"?",
+                "Confirmar Exclusão",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            );
+            if (confirmacao == JOptionPane.YES_OPTION) {
+                banco.getClientes().excluir(id);
+                atualizarTabela();
+                JOptionPane.showMessageDialog(this, "Cliente removido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                limparCampos();
+            }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Digite um ID válido!");
+            JOptionPane.showMessageDialog(this, "Digite um ID válido!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     private void buscarPorId() {
@@ -152,10 +165,10 @@ public class ClienteGUI extends JFrame {
             if (b != null) {
                 modeloTabela.addRow(new Object[]{b.getId(), b.getNome(), b.getCpf(), b.getTelefone()});
             } else {
-                JOptionPane.showMessageDialog(this, "Cliente com ID " + id + " não encontrado.");
+                JOptionPane.showMessageDialog(this, "Cliente com ID " + id + " não encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Digite um ID válido!");
+            JOptionPane.showMessageDialog(this, "Digite um ID válido!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

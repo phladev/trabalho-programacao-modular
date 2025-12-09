@@ -66,10 +66,10 @@ public class ServicoGUI extends JFrame {
         
         atualizarTabela();
         
-        btnCadastrar.addActionListener(e -> { cadastrar(); limparCampos(); });
-        btnAtualizar.addActionListener(e -> { atualizar(); limparCampos(); });
-        btnRemover.addActionListener(e -> { remover(); limparCampos(); });
-        btnBuscar.addActionListener(e -> { buscarPorId(); limparCampos(); });
+        btnCadastrar.addActionListener(e -> cadastrar());
+        btnAtualizar.addActionListener(e -> atualizar());
+        btnRemover.addActionListener(e -> remover());
+        btnBuscar.addActionListener(e -> buscarPorId());
         btnListar.addActionListener(e -> atualizarTabela());
         
         setVisible(true);
@@ -109,10 +109,10 @@ public class ServicoGUI extends JFrame {
     private void cadastrar() {
         try {
             String nome = campoNome.getText();
-            String precoStr = campoPreco.getText();
-            String tempoStr = campoTempo.getText();
+            String precoStr = campoPreco.getText().replace(",", ".");
+            String tempoStr = campoTempo.getText().replace(",", ".");
             
-            if (nome.isEmpty() || precoStr.isEmpty() || tempoStr.isEmpty()) {
+            if (nome.isEmpty() || campoPreco.getText().isEmpty() || campoTempo.getText().isEmpty()) {
                 throw new IllegalArgumentException("Todos os campos devem ser preenchidos!");
             }
             
@@ -132,6 +132,7 @@ public class ServicoGUI extends JFrame {
             banco.getServicos().inserir(novo);
             atualizarTabela();
             JOptionPane.showMessageDialog(this, "Serviço cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            limparCampos();
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Preço e tempo devem ser números válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
@@ -154,7 +155,7 @@ public class ServicoGUI extends JFrame {
             }
             
             if (!campoPreco.getText().isEmpty()) {
-                double preco = Double.parseDouble(campoPreco.getText());
+                double preco = Double.parseDouble(campoPreco.getText().replace(",", "."));
                 if (preco <= 0) {
                     throw new IllegalArgumentException("O preço deve ser maior que zero!");
                 }
@@ -162,7 +163,7 @@ public class ServicoGUI extends JFrame {
             }
             
             if (!campoTempo.getText().isEmpty()) {
-                double tempo = Double.parseDouble(campoTempo.getText());
+                double tempo = Double.parseDouble(campoTempo.getText().replace(",", "."));
                 if (tempo <= 0) {
                     throw new IllegalArgumentException("O tempo deve ser maior que zero!");
                 }
@@ -172,6 +173,7 @@ public class ServicoGUI extends JFrame {
             banco.getServicos().alterar(s);
             atualizarTabela();
             JOptionPane.showMessageDialog(this, "Serviço atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            limparCampos();
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
@@ -182,15 +184,24 @@ public class ServicoGUI extends JFrame {
     private void remover() {
         try {
             int id = Integer.parseInt(campoId.getText());
-            boolean sucesso = banco.getServicos().excluir(id);
-            
-            if (!sucesso) {
+            Servico servico = banco.getServicos().buscarPorId(id);
+            if (servico == null) {
                 JOptionPane.showMessageDialog(this, "Serviço com ID " + id + " não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Serviço removido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                return;
             }
-            
-            atualizarTabela();
+            int confirmacao = JOptionPane.showConfirmDialog(
+                this,
+                "Tem certeza que deseja excluir o serviço \"" + servico.getNome() + "\"?",
+                "Confirmar Exclusão",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            );
+            if (confirmacao == JOptionPane.YES_OPTION) {
+                banco.getServicos().excluir(id);
+                atualizarTabela();
+                JOptionPane.showMessageDialog(this, "Serviço removido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                limparCampos();
+            }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Digite um ID válido!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -210,10 +221,10 @@ public class ServicoGUI extends JFrame {
                     String.format("%.1f", s.getTempo())
                 });
             } else {
-                JOptionPane.showMessageDialog(this, "Serviço com ID " + id + " não encontrado.");
+                JOptionPane.showMessageDialog(this, "Serviço com ID " + id + " não encontrado.", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Digite um ID válido!");
+            JOptionPane.showMessageDialog(this, "Digite um ID válido!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
