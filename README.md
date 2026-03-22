@@ -19,7 +19,6 @@ O sistema foi desenvolvido em Java com foco em organização modular, separaçã
 - [Estrutura de Diretórios](#estrutura-de-diretórios)
 - [Tecnologias e Requisitos](#tecnologias-e-requisitos)
 - [Como Compilar e Executar](#como-compilar-e-executar)
-- [Como Executar os Testes](#como-executar-os-testes)
 - [Dados Iniciais de Exemplo](#dados-iniciais-de-exemplo)
 - [Pontos de Atenção](#pontos-de-atenção)
 
